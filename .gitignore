@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[oc]
+*.egg-info/
+build/
+dist/
+wheels/
+
+# Virtual environment
+.venv/
+
+# uv / tooling caches
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+
+# R source and original package files (kept locally for reference only)
+R/
+src/
+man/
+DESCRIPTION
+NAMESPACE
+MD5
+multispatialCCM_1.3.tar.gz
+ccm_data.csv
+ccm_data.rds
+
+# macOS
+.DS_Store
+
+# Editor / IDE
+.claude/
+.idea/
+.vscode/
+
+# Generated plots at root level
+output_*.png

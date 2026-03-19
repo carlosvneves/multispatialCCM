@@ -15,9 +15,15 @@ uv add .
 ### Install From GitHub
 
 ```bash
-pip install "git+https://github.com/carlosvneves/multispatialCCM.git@rust-backend"
+pip install "git+https://github.com/carlosvneves/multispatialCCM.git@main"
 # or, with uv:
-uv pip install "git+https://github.com/carlosvneves/multispatialCCM.git@rust-backend"
+uv pip install "git+https://github.com/carlosvneves/multispatialCCM.git@main"
+```
+
+Need compatibility with the previous implementation?
+
+```bash
+uv pip install "git+https://github.com/carlosvneves/multispatialCCM.git@legacy"
 ```
 
 ## Quick start

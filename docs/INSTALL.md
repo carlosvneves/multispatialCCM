@@ -21,13 +21,19 @@ uv run <command>
 Install directly from the repository branch/tag/commit:
 
 ```bash
-pip install "git+https://github.com/carlosvneves/multispatialCCM.git@rust-backend"
+pip install "git+https://github.com/carlosvneves/multispatialCCM.git@main"
 ```
 
 or with `uv`:
 
 ```bash
-uv pip install "git+https://github.com/carlosvneves/multispatialCCM.git@rust-backend"
+uv pip install "git+https://github.com/carlosvneves/multispatialCCM.git@main"
+```
+
+Install legacy branch (pre-Rust main) when needed:
+
+```bash
+uv pip install "git+https://github.com/carlosvneves/multispatialCCM.git@legacy"
 ```
 
 Examples with immutable refs:

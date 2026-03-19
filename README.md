@@ -118,5 +118,5 @@ Emat values match R to < 1e-6. CCM p-values match the DoD.
 
 ## References
 
-- Clark, A.T. et al. (2015). *Spatial convergent cross mapping to detect causal relationships from short time series.* Ecology, 96(5), 1174–1181.
-- Sugihara, G. et al. (2012). *Detecting causality in complex ecosystems.* Science, 338(6106), 496–500.
+- [Clark, A.T. et al. (2015). *Spatial convergent cross mapping to detect causal relationships from short time series.* Ecology, 96(5), 1174–1181.](https://esajournals.onlinelibrary.wiley.com/doi/10.1890/14-1479.1)
+- [Sugihara, G. et al. (2012). *Detecting causality in complex ecosystems.* Science, 338(6106), 496–500.](https://esajournals.onlinelibrary.wiley.com/doi/10.1890/14-1479.1#i0012-9658-96-5-1174-Sugihara3)

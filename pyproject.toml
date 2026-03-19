@@ -17,3 +17,6 @@ plot = ["matplotlib>=3.5"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["multispatialCCM"]
+
+[tool.maturin]
+module-name = "_multispatialccm_rust"

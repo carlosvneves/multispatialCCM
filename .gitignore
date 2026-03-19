@@ -16,7 +16,9 @@ wheels/
 
 # R source and original package files (kept locally for reference only)
 R/
-src/
+src/*
+!src/
+!src/*.rs
 man/
 DESCRIPTION
 NAMESPACE

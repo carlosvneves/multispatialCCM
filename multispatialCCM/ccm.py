@@ -1,5 +1,7 @@
 import numpy as np
 
+from ._rust import get_rust_module
+
 
 def _get_acceptable_lib_ccm(A, E, tau, plengtht):
     """
@@ -134,7 +136,7 @@ def _ccm_single_iteration(A, B, E, tau, acceptablelib, DesiredL, from_idx):
     return rho_out, Aest
 
 
-def CCM_boot(A, B, E, tau=1, DesiredL=None, iterations=100):
+def _ccm_boot_python(A, B, E, tau=1, DesiredL=None, iterations=100):
     """
     Convergent Cross Mapping (CCM) with Bootstrap.
     """
@@ -256,3 +258,16 @@ def ccmtest(CCM_boot_A, CCM_boot_B):
         pval_b_cause_a = np.nan
 
     return {"pval_a_cause_b": pval_a_cause_b, "pval_b_cause_a": pval_b_cause_a}
+
+
+def CCM_boot(A, B, E, tau=1, DesiredL=None, iterations=100, backend="auto"):
+    """Backend-aware CCM wrapper."""
+    if backend not in {"auto", "python", "rust"}:
+        raise ValueError("backend must be one of: auto, python, rust")
+
+    rust_mod = get_rust_module() if backend in {"auto", "rust"} else None
+
+    if rust_mod is not None and hasattr(rust_mod, "ccm_boot"):
+        return rust_mod.ccm_boot(A, B, int(E), int(tau), DesiredL, int(iterations))
+
+    return _ccm_boot_python(A=A, B=B, E=E, tau=tau, DesiredL=DesiredL, iterations=iterations)

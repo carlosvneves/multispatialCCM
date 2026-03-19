@@ -27,8 +27,35 @@ fn ssr_pred_boot(
     Ok(out.into_py(py))
 }
 
+#[pyfunction]
+#[pyo3(signature = (a, b, e, tau=1, desired_l=None, iterations=100))]
+fn ccm_boot(
+    py: Python<'_>,
+    a: PyObject,
+    b: PyObject,
+    e: usize,
+    tau: usize,
+    desired_l: Option<PyObject>,
+    iterations: usize,
+) -> PyResult<PyObject> {
+    let ccm_mod = py.import_bound("multispatialCCM.ccm")?;
+    let python_impl = ccm_mod.getattr("_ccm_boot_python")?;
+
+    let kwargs = PyDict::new_bound(py);
+    kwargs.set_item("A", a)?;
+    kwargs.set_item("B", b)?;
+    kwargs.set_item("E", e)?;
+    kwargs.set_item("tau", tau)?;
+    kwargs.set_item("DesiredL", desired_l)?;
+    kwargs.set_item("iterations", iterations)?;
+
+    let out = python_impl.call((), Some(&kwargs))?;
+    Ok(out.into_py(py))
+}
+
 #[pymodule]
 fn _multispatialccm_rust(_py: Python<'_>, _m: &Bound<'_, PyModule>) -> PyResult<()> {
     _m.add_function(wrap_pyfunction!(ssr_pred_boot, _m)?)?;
+    _m.add_function(wrap_pyfunction!(ccm_boot, _m)?)?;
     Ok(())
 }

@@ -270,6 +270,11 @@ def CCM_boot(A, B, E, tau=1, DesiredL=None, iterations=100, backend=None):
     rust_mod = get_rust_module() if resolved_backend in {"auto", "rust"} else None
 
     if rust_mod is not None and hasattr(rust_mod, "ccm_boot"):
-        return rust_mod.ccm_boot(A, B, int(E), int(tau), DesiredL, int(iterations))
+        out = rust_mod.ccm_boot(A, B, int(E), int(tau), DesiredL, int(iterations))
+        # Keep API parity with Python path: ndarray fields, not lists.
+        for key in ("A", "Aest", "B", "rho", "sdevrho", "Lobs", "FULLinfo"):
+            if key in out:
+                out[key] = np.asarray(out[key])
+        return out
 
     return _ccm_boot_python(A=A, B=B, E=E, tau=tau, DesiredL=DesiredL, iterations=iterations)

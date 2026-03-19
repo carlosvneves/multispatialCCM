@@ -1,6 +1,7 @@
 import numpy as np
 
 from ._rust import get_rust_module
+from .backend import get_backend
 
 
 def _get_acceptable_lib_ccm(A, E, tau, plengtht):
@@ -260,12 +261,13 @@ def ccmtest(CCM_boot_A, CCM_boot_B):
     return {"pval_a_cause_b": pval_a_cause_b, "pval_b_cause_a": pval_b_cause_a}
 
 
-def CCM_boot(A, B, E, tau=1, DesiredL=None, iterations=100, backend="auto"):
+def CCM_boot(A, B, E, tau=1, DesiredL=None, iterations=100, backend=None):
     """Backend-aware CCM wrapper."""
-    if backend not in {"auto", "python", "rust"}:
+    resolved_backend = get_backend() if backend is None else backend
+    if resolved_backend not in {"auto", "python", "rust"}:
         raise ValueError("backend must be one of: auto, python, rust")
 
-    rust_mod = get_rust_module() if backend in {"auto", "rust"} else None
+    rust_mod = get_rust_module() if resolved_backend in {"auto", "rust"} else None
 
     if rust_mod is not None and hasattr(rust_mod, "ccm_boot"):
         return rust_mod.ccm_boot(A, B, int(E), int(tau), DesiredL, int(iterations))

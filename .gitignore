@@ -19,6 +19,8 @@ R/
 src/*
 !src/
 !src/*.rs
+target/
+Cargo.lock
 man/
 DESCRIPTION
 NAMESPACE

@@ -44,6 +44,22 @@ print(result)
 # → B causes A (significant); A does not cause B
 ```
 
+## Backend Selection
+
+`SSR_pred_boot` and `CCM_boot` accept `backend`:
+- `"auto"` (default): tries native Rust path when available, otherwise Python.
+- `"python"`: always use Python path.
+- `"rust"`: prefer Rust path, fallback to Python if native module is unavailable.
+
+You can also set a global default:
+
+```python
+from multispatialCCM import set_backend, get_backend
+
+set_backend("python")  # "auto" | "python" | "rust"
+print(get_backend())
+```
+
 ## API
 
 | Function | Description |
@@ -54,6 +70,7 @@ print(result)
 | `ccmtest(CCM_boot_A, CCM_boot_B)` | Returns p-values for both causal directions |
 | `make_ccm_data()` | Generates simulated coupled logistic map data |
 | `load_ccm_data(path)` | Loads CCM data from a CSV file |
+| `set_backend(mode)` / `get_backend()` | Configure or inspect global backend mode |
 
 ## Validation
 

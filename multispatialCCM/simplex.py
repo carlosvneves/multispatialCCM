@@ -1,6 +1,7 @@
 import numpy as np
 
 from ._rust import get_rust_module
+from .backend import get_backend
 
 
 def _get_acceptable_lib(A, E, tau, predstep=1):
@@ -252,7 +253,7 @@ def _ssr_pred_boot_python(A, B=None, E=2, tau=1, predstep=1, matchSugi=0):
     }
 
 
-def SSR_pred_boot(A, B=None, E=2, tau=1, predstep=1, matchSugi=0, backend="auto"):
+def SSR_pred_boot(A, B=None, E=2, tau=1, predstep=1, matchSugi=0, backend=None):
     """
     Backend-aware SSR wrapper.
 
@@ -261,10 +262,11 @@ def SSR_pred_boot(A, B=None, E=2, tau=1, predstep=1, matchSugi=0, backend="auto"
       - "rust": prefer Rust module with `ssr_pred_boot` (falls back to Python)
       - "auto": use Rust when available, else Python
     """
-    if backend not in {"auto", "python", "rust"}:
+    resolved_backend = get_backend() if backend is None else backend
+    if resolved_backend not in {"auto", "python", "rust"}:
         raise ValueError("backend must be one of: auto, python, rust")
 
-    rust_mod = get_rust_module() if backend in {"auto", "rust"} else None
+    rust_mod = get_rust_module() if resolved_backend in {"auto", "rust"} else None
 
     if rust_mod is not None and hasattr(rust_mod, "ssr_pred_boot"):
         return rust_mod.ssr_pred_boot(

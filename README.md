@@ -1,6 +1,6 @@
 # multispatialCCM
 
-Pure-Python translation of the R package [`multispatialCCM`](https://cran.r-project.org/package=multispatialCCM) (Clark et al. 2015).
+Python+Rust translation of the R package [`multispatialCCM`](https://cran.r-project.org/package=multispatialCCM) (Clark et al. 2015).
 
 Implements **Convergent Cross Mapping (CCM)** for detecting causal relationships in time series from spatially replicated systems, based on Sugihara et al. (2012).
 

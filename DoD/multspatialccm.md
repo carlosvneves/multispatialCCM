@@ -93,43 +93,5 @@ pval_a_cause_b pval_b_cause_a
 
 ```
 
-
-Olá! É excelente ver você explorando fronteiras mais avançadas da análise de séries temporais não-lineares. O Convergent Cross Mapping (CCM), introduzido por Sugihara e colaboradores, é uma ferramenta fantástica para sistemas dinâmicos complexos onde a tradicional Causalidade de Granger falha (especialmente quando há acoplamento não-linear).
-
-Como você está buscando entender o mecanismo fundamental por trás desse resultado,  visualizar a reconstrução das variedades (manifolds) pelo Teorema de Takens ajuda a consolidar o conceito de que, em sistemas acoplados, o histórico de uma variável carrega a "impressão digital" da variável que a causou.
-
-Vamos destrinchar os resultados do seu código R passo a passo:
-
-### 1. Seleção da Dimensão de Imersão (A Matriz `Emat`)
-
-Antes de rodar o CCM, o código busca a dimensão ótima (E) para reconstruir o espaço de fase de cada série isoladamente. A matriz `Emat` mostra o coeficiente de correlação (`rho`) entre os valores observados e previstos usando Simplex Projection para diferentes valores de E (variando de 2 a 5).
-
-* **Para a série A:** O valor máximo de `rho` é **0.4109**, que ocorre na primeira linha da matriz. Como o loop começa em E=2, essa primeira linha corresponde a **E = 2**.
-* **Para a série B:** O valor máximo de `rho` é **0.5589**, na segunda linha, o que corresponde a **E = 3**.
-
-Isso explica por que o código define `E_A<-2` e `E_B<-3` logo em seguida. No seu segundo gráfico (E vs rho), vemos exatamente isso: a linha preta (A) tem um pico em E=2, e a linha vermelha tracejada (B) tem o pico em E=3.
-
-### 2. O Teste de Causalidade CCM (Os P-Valores)
-
-Aqui está a parte do CCM que muitas vezes confunde os analistas na primeira leitura: a lógica da previsão cruzada é invertida. **Para provar que B causa A, nós usamos o histórico da série A para tentar estimar os estados passados de B.** Se B causou A, a dinâmica de B está "codificada" em A.
-
-Vamos olhar os resultados do seu `ccmtest`:
-
-* **`pval_a_cause_b = 0.2`:** Este p-valor (20%) é superior ao nível de significância padrão de 5%. Isso significa que não há evidências estatísticas para afirmar que a série B consegue prever os estados de A no manifold cruzado. Logo, **A não causa B**.
-* **`pval_b_cause_a = 0.0`:** Este p-valor é altamente significante. Significa que a série A consegue prever de forma excelente os estados de B. Seguindo a regra do CCM, isso prova que a informação fluiu de B para A. Logo, **B causa A**.
-
-Isso confirma exatamente a premissa geradora dos seus dados simulados: *"A is causally forced by B, but the reverse is not true."*
-
-### 3. A Análise Visual (Gráfico de Convergência)
-
-O primeiro gráfico que você gerou é a prova visual dessa causalidade. A principal característica do CCM é a **convergência** — a habilidade preditiva (`rho`) deve aumentar e se estabilizar à medida que fornecemos mais dados históricos (aumentando o tamanho da biblioteca, `L`).
-
-* A **linha tracejada vermelha ("B causes A")** mostra o `rho` subindo progressivamente de cerca de 0.1 para estabilizar acima de 0.6 conforme `L` aumenta em direção a 200. Essa convergência é a assinatura clássica de causalidade no CCM.
-* A **linha sólida preta ("A causes B")** permanece plana e próxima a 0.1 (frequentemente cruzando os limites de erro em torno de zero), indicando que, por mais dados (L) que você adicione, não há ganho preditivo. Não há causalidade aqui.
-
-### Próximos Passos e Recomendações
-
-Sua análise inicial está perfeita e as conclusões são sólidas. Como seu parceiro de econometria, recomendo os seguintes testes de robustez antes de batermos o martelo (especialmente se formos aplicar isso a dados reais depois):
-
 * **Análise do Time Lag (`tau`):** O código usou o padrão `tau = 1`. Em dados de alta frequência ou com inércia muito forte, um `tau` de 1 pode não desdobrar o atrator adequadamente (sucessivas observações seriam muito colineares). Plotar a Função de Autocorrelação (ACF) ou Informação Mútua (Mutual Information) das séries ajudaria a confirmar se `tau = 1` é o ideal.
 * **Testes com Surrogate Data:** Embora o bootstrap do pacote seja bom, sistemas reais com forte sazonalidade ou ciclos de baixa frequência podem gerar falsos positivos ("spurious cross-mapping"). Testar contra dados substitutos (como *Twin Surrogates* ou *Ebisuzaki phase-randomization*) garante que a causalidade detectada se deve à dinâmica não-linear e não a propriedades lineares genéricas.

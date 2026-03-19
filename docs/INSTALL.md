@@ -2,6 +2,44 @@
 
 This project is packaged as a mixed Python + Rust distribution using `maturin`.
 
+## Recommended: uv Environment + Dependency Management
+
+```bash
+uv venv
+source .venv/bin/activate
+uv sync
+```
+
+Run commands inside the project environment with:
+
+```bash
+uv run <command>
+```
+
+## Install From GitHub
+
+Install directly from the repository branch/tag/commit:
+
+```bash
+pip install "git+https://github.com/carlosvneves/multispatialCCM.git@rust-backend"
+```
+
+or with `uv`:
+
+```bash
+uv pip install "git+https://github.com/carlosvneves/multispatialCCM.git@rust-backend"
+```
+
+Examples with immutable refs:
+
+```bash
+# tag
+uv pip install "git+https://github.com/carlosvneves/multispatialCCM.git@v0.1.0"
+
+# commit
+uv pip install "git+https://github.com/carlosvneves/multispatialCCM.git@<commit-sha>"
+```
+
 ## Build Artifacts Locally
 
 From repository root:

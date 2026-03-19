@@ -12,6 +12,14 @@ pip install .
 uv add .
 ```
 
+### Install From GitHub
+
+```bash
+pip install "git+https://github.com/carlosvneves/multispatialCCM.git@rust-backend"
+# or, with uv:
+uv pip install "git+https://github.com/carlosvneves/multispatialCCM.git@rust-backend"
+```
+
 ## Quick start
 
 ```python

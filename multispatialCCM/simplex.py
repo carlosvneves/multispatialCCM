@@ -1,5 +1,7 @@
 import numpy as np
 
+from ._rust import get_rust_module
+
 
 def _get_acceptable_lib(A, E, tau, predstep=1):
     """
@@ -66,7 +68,7 @@ def _getorder_ssr(distances, E, acceptablelib, i, predstep):
     return neighbors, nneigh
 
 
-def SSR_pred_boot(A, B=None, E=2, tau=1, predstep=1, matchSugi=0):
+def _ssr_pred_boot_python(A, B=None, E=2, tau=1, predstep=1, matchSugi=0):
     """
     Simplex Projection / Single Series Prediction with Bootstrap.
 
@@ -248,3 +250,30 @@ def SSR_pred_boot(A, B=None, E=2, tau=1, predstep=1, matchSugi=0):
         "acceptablelib": acceptablelib,
         "plengthacceptablelib": lengthacceptablelib,
     }
+
+
+def SSR_pred_boot(A, B=None, E=2, tau=1, predstep=1, matchSugi=0, backend="auto"):
+    """
+    Backend-aware SSR wrapper.
+
+    backend:
+      - "python": always use Python implementation
+      - "rust": prefer Rust module with `ssr_pred_boot` (falls back to Python)
+      - "auto": use Rust when available, else Python
+    """
+    if backend not in {"auto", "python", "rust"}:
+        raise ValueError("backend must be one of: auto, python, rust")
+
+    rust_mod = get_rust_module() if backend in {"auto", "rust"} else None
+
+    if rust_mod is not None and hasattr(rust_mod, "ssr_pred_boot"):
+        return rust_mod.ssr_pred_boot(
+            A,
+            B,
+            int(E),
+            int(tau),
+            int(predstep),
+            int(matchSugi),
+        )
+
+    return _ssr_pred_boot_python(A=A, B=B, E=E, tau=tau, predstep=predstep, matchSugi=matchSugi)

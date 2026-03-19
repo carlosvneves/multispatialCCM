@@ -2,6 +2,9 @@
 name = "multispatialccm-rust"
 version = "0.1.0"
 edition = "2021"
+description = "Python + Rust implementation of multispatial CCM (Convergent Cross Mapping)"
+license = "GPL-3.0-or-later"
+repository = "https://github.com/carloseduardoverasneves/multispatialCCM"
 
 [lib]
 name = "_multispatialccm_rust"

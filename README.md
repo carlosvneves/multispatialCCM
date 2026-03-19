@@ -56,9 +56,16 @@ You can also set a global default:
 ```python
 from multispatialCCM import set_backend, get_backend
 
-set_backend("python")  # "auto" | "python" | "rust"
+set_backend("rust")  # "auto" | "python" | "rust"
 print(get_backend())
 ```
+
+
+## Documentation
+
+- Method: [docs/METHOD.md](docs/METHOD.md)
+- API: [docs/API.md](docs/API.md)
+- Installation and packaging: [docs/INSTALL.md](docs/INSTALL.md)
 
 ## API
 

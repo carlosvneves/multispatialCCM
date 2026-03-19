@@ -32,6 +32,7 @@ ccm_data.rds
 .claude/
 .idea/
 .vscode/
+.worktrees/
 
 # Generated plots at root level
 output_*.png

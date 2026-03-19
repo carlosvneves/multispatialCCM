@@ -199,7 +199,8 @@ def _ccm_boot_python(A, B, E, tau=1, DesiredL=None, iterations=100):
         rho_results.append(rho_iter)   # keep full-length array (len == len(DesiredL))
         Aest_results.append(Aest_iter)
 
-        for lob in (DesiredL - E + 1):
+        # R output is 1-based for Lobs.
+        for lob in (DesiredL - E + 2):
             lpos.add(lob)
 
         if it % 10 == 0:

@@ -525,7 +525,8 @@ fn ccm_boot(
             }
             rho_mat[lidx][it] = get_rho_ccm(&a_vec, &aest, &acceptablelib);
             if it == 0 {
-                lpos.push(l.saturating_sub(e).saturating_add(1));
+                // R output is 1-based for Lobs.
+                lpos.push(l.saturating_sub(e).saturating_add(2));
             }
         }
 

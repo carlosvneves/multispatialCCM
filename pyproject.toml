@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["maturin>=1.5,<2.0"]
+build-backend = "maturin"
 
 [project]
 name = "multispatialccm"
@@ -15,8 +15,6 @@ dependencies = [
 [project.optional-dependencies]
 plot = ["matplotlib>=3.5"]
 
-[tool.hatch.build.targets.wheel]
-packages = ["multispatialCCM"]
-
 [tool.maturin]
-module-name = "_multispatialccm_rust"
+module-name = "multispatialCCM._multispatialccm_rust"
+python-source = "."

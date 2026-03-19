@@ -6,6 +6,10 @@ from pathlib import Path
 def get_rust_module() -> ModuleType | None:
     """Return native Rust module when available, otherwise None."""
     try:
+        return import_module("multispatialCCM._multispatialccm_rust")
+    except ImportError:
+        pass
+    try:
         return import_module("_multispatialccm_rust")
     except ImportError:
         pass

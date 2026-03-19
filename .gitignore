@@ -21,6 +21,7 @@ src/*
 !src/*.rs
 target/
 Cargo.lock
+multispatialCCM/_multispatialccm_rust*.so
 man/
 DESCRIPTION
 NAMESPACE
